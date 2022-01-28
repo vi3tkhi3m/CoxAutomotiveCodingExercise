@@ -13,6 +13,16 @@ namespace CoxAutomotiveCodingExercise.API.Services
             _restClient = new RestClient(_baseUrl);
         }
 
+        public async Task<string> CreateDataSet()
+        {
+            var request = new RestRequest($"/datasetId")
+                { RequestFormat = DataFormat.Json };
+
+            var response = await _restClient.ExecuteAsync<string>(request);
+
+            return response.Data;
+        }
+
         public async Task<Dealer> GetDealerDetails(string dataSetId, int dealerId)
         {
             var request = new RestRequest($"/{dataSetId}/dealers/{dealerId}")
