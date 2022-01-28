@@ -2,6 +2,6 @@
 {
     public class DataSet
     {
-        public List<Dealer> Dealers { get; set; }
+        public List<DealerVehicles> Dealers { get; set; }
     }
 }

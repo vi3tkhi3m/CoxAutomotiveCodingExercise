@@ -2,6 +2,8 @@ using CoxAutomotiveCodingExercise.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 // Add services to the container.
 builder.Services.AddScoped<IDataSetService, DataSetService>();
 builder.Services.AddScoped<ICoxAutoClientService, CoxAutoClientService>();
