@@ -1,10 +1,11 @@
-﻿using CoxAutomotiveCodingExercise.API.Models;
+﻿using CoxAutomotiveCodingExercise.API.Dtos;
+using CoxAutomotiveCodingExercise.API.Models;
 
 namespace CoxAutomotiveCodingExercise.API.Services
 {
     public interface IDataSetService
     {
-        public int SendAnswer(DataSet dataSet);
-        public DataSet CreateAnswer();
+        public AnswerResponse SendAnswer(Answer answer);
+        public Answer CreateAnswer();
     }
 }

@@ -4,5 +4,11 @@
     {
         public int DealerId { get; set; }
         public string Name { get; set; }
+        public List<Vehicle> Vehicles { get; set; }
+
+        public Dealer()
+        {
+            Vehicles = new List<Vehicle>();
+        }
     }
 }

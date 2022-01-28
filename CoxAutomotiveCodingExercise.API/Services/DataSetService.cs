@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CoxAutomotiveCodingExercise.API.Dtos;
 using CoxAutomotiveCodingExercise.API.Exceptions;
 using CoxAutomotiveCodingExercise.API.Models;
 
@@ -17,41 +18,40 @@ namespace CoxAutomotiveCodingExercise.API.Services
             _mapper = mapper;
         }
 
-        public int SendAnswer(DataSet dataSet)
+        public AnswerResponse SendAnswer(Answer answer)
         {
-            throw new NotImplementedException();
+            return _coxAutoClientService.SendAnswer(answer.DataSetId, answer.DataSet).Result;
         }
 
-        public DataSet CreateAnswer()
+        public Answer CreateAnswer()
         {
             try
             {
-                // Create Dataset
-                var dataSetId = _coxAutoClientService.CreateDataSet().Result;
+                var dataSetId = _coxAutoClientService.CreateDataSet().Result.datasetId;
+
+                var dataSet = new DataSet();
 
                 if (!String.IsNullOrEmpty(dataSetId))
                 {
-                    var vehicleIds = _coxAutoClientService.GetVehicleIdsFromDataSet(dataSetId).Result;
+                    var vehicleIdsList = _coxAutoClientService.GetVehicleIdsFromDataSet(dataSetId).Result.VehicleIds.ToArray();
 
-                    if (vehicleIds.Any())
+                    if (vehicleIdsList.Any())
                     {
-                        var dealerVehicles = new List<DealerVehicles>();
-
-                        foreach (var vehicleId in vehicleIds)
+                        for (int i = 0; i < vehicleIdsList.Count(); i++)
                         {
-                            var vehicleDetails = _coxAutoClientService.GetVehicleDetails(dataSetId, vehicleId).Result;
+                            var vehicleDetails = _coxAutoClientService.GetVehicleDetails(dataSetId, vehicleIdsList[i]).Result;
                             var vehicle = _mapper.Map<Vehicle>(vehicleDetails);
 
-                            if (!dealerVehicles.Any(x => x.DealerId == vehicleDetails.DealderId))
+                            if (dataSet.Dealers.All(x => x.DealerId != vehicleDetails.DealerId))
                             {
-                                var dealerDetails = _coxAutoClientService.GetDealerDetails(dataSetId, vehicleDetails.DealderId).Result;
-                                var dealerVehicle = _mapper.Map<DealerVehicles>(dealerDetails);
-                                dealerVehicle.Vehicles.Add(vehicle);
-                                dealerVehicles.Add(dealerVehicle);
+                                var dealerDetails = _coxAutoClientService.GetDealerDetails(dataSetId, vehicleDetails.DealerId).Result;
+                                var dealer = _mapper.Map<Dealer>(dealerDetails);
+                                dealer.Vehicles.Add(vehicle);
+                                dataSet.Dealers.Add(dealer);
                             }
                             else
                             {
-                                dealerVehicles.Single(x => x.DealerId == vehicleDetails.DealderId).Vehicles.Add(vehicle);
+                                dataSet.Dealers.Single(x => x.DealerId == vehicleDetails.DealerId).Vehicles.Add(vehicle);
                             }
                         }
                     }
@@ -61,12 +61,12 @@ namespace CoxAutomotiveCodingExercise.API.Services
                     throw new AppException("Failed to get a new dataSetId from external source.");
                 }
 
-                return new DataSet();
+                return new Answer(dataSetId, dataSet);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw new AppException();
+                throw new AppException(e.Message);
             }
         }
     }

@@ -2,6 +2,11 @@
 {
     public class DataSet
     {
-        public List<DealerVehicles> Dealers { get; set; }
+        public List<Dealer> Dealers { get; set; }
+
+        public DataSet()
+        {
+            Dealers = new List<Dealer>();
+        }
     }
 }
