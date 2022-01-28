@@ -7,7 +7,7 @@ namespace CoxAutomotiveCodingExercise.API.Controllers
     public class DataSetController : ControllerBase
     {
         [HttpGet]
-        public IActionResult SendAnswer()
+        public IActionResult CreateAndSendAnswer()
         {
 
             return Ok();
