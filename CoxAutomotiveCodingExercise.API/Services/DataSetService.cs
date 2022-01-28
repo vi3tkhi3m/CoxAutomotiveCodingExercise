@@ -56,6 +56,10 @@ namespace CoxAutomotiveCodingExercise.API.Services
                         }
                     }
                 }
+                else
+                {
+                    throw new AppException("Failed to get a new dataSetId from external source.");
+                }
 
                 return new DataSet();
             }
