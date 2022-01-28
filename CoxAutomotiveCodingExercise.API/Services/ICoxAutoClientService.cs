@@ -4,8 +4,8 @@ namespace CoxAutomotiveCodingExercise.API.Services
 {
     public interface ICoxAutoClientService
     {
-        public Dealer GetDealerDetails(string dataSetId, int dealerId);
-        public IEnumerable<int> GetVehicleIdsFromDataSet(string dataSetId);
-        public VehicleDealer GetVehicleDetails(string dataSetId, int vehicleId);
+        public Task<Dealer> GetDealerDetails(string dataSetId, int dealerId);
+        public Task<IEnumerable<int>> GetVehicleIdsFromDataSet(string dataSetId);
+        public Task<VehicleDealer> GetVehicleDetails(string dataSetId, int vehicleId);
     }
 }

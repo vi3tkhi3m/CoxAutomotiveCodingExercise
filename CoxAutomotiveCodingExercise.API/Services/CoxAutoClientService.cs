@@ -1,22 +1,46 @@
 ﻿using CoxAutomotiveCodingExercise.API.Models;
+using RestSharp;
 
 namespace CoxAutomotiveCodingExercise.API.Services
 {
     public class CoxAutoClientService : ICoxAutoClientService
     {
-        public Dealer GetDealerDetails(string dataSetId, int dealerId)
+        private readonly RestClient _restClient;
+        private readonly string _baseUrl = "http://api.coxauto-interview.com/api";
+
+        public CoxAutoClientService()
         {
-            throw new NotImplementedException();
+            _restClient = new RestClient(_baseUrl);
         }
 
-        public IEnumerable<int> GetVehicleIdsFromDataSet(string dataSetId)
+        public async Task<Dealer> GetDealerDetails(string dataSetId, int dealerId)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest($"/{dataSetId}/dealers/{dealerId}")
+                { RequestFormat = DataFormat.Json };
+
+            var response = await _restClient.ExecuteAsync<Dealer>(request);
+
+            return response.Data;
         }
 
-        public VehicleDealer GetVehicleDetails(string dataSetId, int vehicleId)
+        public async Task<IEnumerable<int>> GetVehicleIdsFromDataSet(string dataSetId)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest($"/{dataSetId}/vehicles")
+                { RequestFormat = DataFormat.Json };
+
+            var response = await _restClient.ExecuteAsync<IEnumerable<int>>(request);
+
+            return response.Data;
+        }
+
+        public async Task<VehicleDealer> GetVehicleDetails(string dataSetId, int vehicleId)
+        {
+            var request = new RestRequest($"/{dataSetId}/vehicles/{vehicleId}")
+                { RequestFormat = DataFormat.Json };
+
+            var response = await _restClient.ExecuteAsync<VehicleDealer>(request);
+
+            return response.Data;
         }
     }
 }
