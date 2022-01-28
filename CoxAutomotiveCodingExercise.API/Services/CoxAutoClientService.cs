@@ -2,8 +2,13 @@
 
 namespace CoxAutomotiveCodingExercise.API.Services
 {
-    public class VehicleService : IVehicleService
+    public class CoxAutoClientService : ICoxAutoClientService
     {
+        public Dealer GetDealerDetails(string dataSetId, int dealerId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<int> GetVehicleIdsFromDataSet(string dataSetId)
         {
             throw new NotImplementedException();

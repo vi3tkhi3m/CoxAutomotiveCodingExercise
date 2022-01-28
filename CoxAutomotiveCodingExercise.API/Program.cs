@@ -4,8 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IDataSetService, DataSetService>();
-builder.Services.AddScoped<IDealerService, DealerService>();
-builder.Services.AddScoped<IVehicleService, VehicleService>();
+builder.Services.AddScoped<ICoxAutoClientService, CoxAutoClientService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
