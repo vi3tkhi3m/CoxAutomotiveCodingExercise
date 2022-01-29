@@ -7,7 +7,7 @@ namespace CoxAutomotiveCodingExercise.API.Services
     {
         public Task<DataSetIdResponse> CreateDataSet();
         public Task<DealersResponse> GetDealerDetails(string dataSetId, int dealerId);
-        public Task<VehicleIdsResponse> GetVehicleIdsFromDataSet(string dataSetId);
+        public Task<VehicleIdsResponse> GetVehicleIdsFromDataSetId(string dataSetId);
         public Task<VehicleResponse> GetVehicleDetails(string dataSetId, int vehicleId);
         public Task<AnswerResponse> SendAnswer(string dataSetId, DataSet dataSet);
     }

@@ -54,7 +54,7 @@ namespace CoxAutomotiveCodingExercise.API.Services
             }
         }
 
-        public async Task<VehicleIdsResponse> GetVehicleIdsFromDataSet(string dataSetId)
+        public async Task<VehicleIdsResponse> GetVehicleIdsFromDataSetId(string dataSetId)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace CoxAutomotiveCodingExercise.API.Services
             }
             catch (Exception e)
             {
-                _logger.LogCritical($"Sending {nameof(GetVehicleIdsFromDataSet)} request failed!");
+                _logger.LogCritical($"Sending {nameof(GetVehicleIdsFromDataSetId)} request failed!");
                 throw new Exception("Call to external source failed!", e);
             }
         }

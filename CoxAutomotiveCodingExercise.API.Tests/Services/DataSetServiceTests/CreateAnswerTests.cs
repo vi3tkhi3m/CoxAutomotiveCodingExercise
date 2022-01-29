@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using CoxAutomotiveCodingExercise.API.Dtos;
 using CoxAutomotiveCodingExercise.API.Exceptions;
@@ -63,7 +62,7 @@ namespace CoxAutomotiveCodingExercise.API.Tests.Services.DataSetServiceTests
                 {
                     DatasetId = dataSetId
                 });
-            coxAutoClientServiceMock.Setup(m => m.GetVehicleIdsFromDataSet(dataSetId).Result)
+            coxAutoClientServiceMock.Setup(m => m.GetVehicleIdsFromDataSetId(dataSetId).Result)
                 .Returns(new VehicleIdsResponse());
 
             var result = dataSetService.CreateAnswer();
@@ -137,7 +136,7 @@ namespace CoxAutomotiveCodingExercise.API.Tests.Services.DataSetServiceTests
                 {
                     DatasetId = dataSetId
                 });
-            coxAutoClientServiceMock.Setup(m => m.GetVehicleIdsFromDataSet(dataSetId).Result)
+            coxAutoClientServiceMock.Setup(m => m.GetVehicleIdsFromDataSetId(dataSetId).Result)
                 .Returns(new VehicleIdsResponse()
                 {
                     VehicleIds = vehiclesIds
@@ -232,7 +231,7 @@ namespace CoxAutomotiveCodingExercise.API.Tests.Services.DataSetServiceTests
                 {
                     DatasetId = dataSetId
                 });
-            coxAutoClientServiceMock.Setup(m => m.GetVehicleIdsFromDataSet(dataSetId).Result)
+            coxAutoClientServiceMock.Setup(m => m.GetVehicleIdsFromDataSetId(dataSetId).Result)
                 .Returns(new VehicleIdsResponse()
                 {
                     VehicleIds = vehiclesIds

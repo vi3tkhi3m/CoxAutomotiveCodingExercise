@@ -35,7 +35,7 @@ namespace CoxAutomotiveCodingExercise.API.Services
 
                 if (!String.IsNullOrEmpty(dataSetId))
                 {
-                    var vehicleIdsList = _coxAutoClientService.GetVehicleIdsFromDataSet(dataSetId).Result.VehicleIds.ToArray();
+                    var vehicleIdsList = _coxAutoClientService.GetVehicleIdsFromDataSetId(dataSetId).Result.VehicleIds.ToArray();
                     if (vehicleIdsList.Any())
                     {
                         var vehicleResponsesResult = await ExecuteGetVehicleDetailsAsync(vehicleIdsList, dataSetId);
