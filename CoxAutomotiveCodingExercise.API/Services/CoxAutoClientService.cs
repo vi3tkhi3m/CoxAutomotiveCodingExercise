@@ -6,63 +6,111 @@ namespace CoxAutomotiveCodingExercise.API.Services
 {
     public class CoxAutoClientService : ICoxAutoClientService
     {
+        private readonly ILogger _logger;
         private readonly RestClient _restClient;
-        private readonly string _baseUrl = "http://api.coxauto-interview.com/api";
+        private const string BaseUrl = "http://api.coxauto-interview.com/api";
 
-        public CoxAutoClientService()
+        public CoxAutoClientService(ILogger<CoxAutoClientService> logger)
         {
-            _restClient = new RestClient(_baseUrl);
+            _logger = logger;
+            _restClient = new RestClient(BaseUrl);
         }
 
         public async Task<DataSetIdResponse> CreateDataSet()
         {
-            var request = new RestRequest($"/datasetId")
-                { RequestFormat = DataFormat.Json };
+            try
+            {
+                var request = new RestRequest("/DatasetId");
 
-            var response = await _restClient.ExecuteAsync<DataSetIdResponse>(request);
+                _logger.LogInformation($"Sending {request.Method} request to {BaseUrl}{request.Resource}");
+                var response = await _restClient.ExecuteAsync<DataSetIdResponse>(request);
+                _logger.LogInformation($"Successfully got a response from {BaseUrl}{request.Resource}");
 
-            return response.Data;
+                return response.Data;
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Sending {nameof(CreateDataSet)} request failed!");
+                throw new Exception("Call to external source failed!", e);
+            }
         }
 
         public async Task<DealersResponse> GetDealerDetails(string dataSetId, int dealerId)
         {
-            var request = new RestRequest($"/{dataSetId}/dealers/{dealerId}")
-                { RequestFormat = DataFormat.Json };
+            try
+            {
+                var request = new RestRequest($"/{dataSetId}/dealers/{dealerId}");
 
-            var response = await _restClient.ExecuteAsync<DealersResponse>(request);
+                _logger.LogInformation($"Sending {request.Method} request to {BaseUrl}{request.Resource}");
+                var response = await _restClient.ExecuteAsync<DealersResponse>(request);
+                _logger.LogInformation($"Successfully got a response from {BaseUrl}{request.Resource}");
 
-            return response.Data;
+                return response.Data;
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Sending {nameof(GetDealerDetails)} request failed!");
+                throw new Exception("Call to external source failed!", e);
+            }
         }
 
         public async Task<VehicleIdsResponse> GetVehicleIdsFromDataSet(string dataSetId)
         {
-            var request = new RestRequest($"/{dataSetId}/vehicles")
-                { RequestFormat = DataFormat.Json };
+            try
+            {
+                var request = new RestRequest($"/{dataSetId}/vehicles")
+                    { RequestFormat = DataFormat.Json };
 
-            var response = await _restClient.ExecuteAsync<VehicleIdsResponse>(request);
+                _logger.LogInformation($"Sending {request.Method} request to {BaseUrl}{request.Resource}");
+                var response = await _restClient.ExecuteAsync<VehicleIdsResponse>(request);
+                _logger.LogInformation($"Successfully got a response from {BaseUrl}{request.Resource}");
 
-            return response.Data;
+                return response.Data;
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Sending {nameof(GetVehicleIdsFromDataSet)} request failed!");
+                throw new Exception("Call to external source failed!", e);
+            }
         }
 
         public async Task<VehicleResponse> GetVehicleDetails(string dataSetId, int vehicleId)
         {
-            var request = new RestRequest($"/{dataSetId}/vehicles/{vehicleId}")
-                { RequestFormat = DataFormat.Json };
+            try
+            {
+                var request = new RestRequest($"/{dataSetId}/vehicles/{vehicleId}");
 
-            var response = await _restClient.ExecuteAsync<VehicleResponse>(request);
+                _logger.LogInformation($"Sending {request.Method} request to {BaseUrl}{request.Resource}");
+                var response = await _restClient.ExecuteAsync<VehicleResponse>(request);
+                _logger.LogInformation($"Successfully got a response from {BaseUrl}{request.Resource}");
 
-            return response.Data;
+                return response.Data;
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Sending {nameof(GetVehicleDetails)} request failed!");
+                throw new Exception("Call to external source failed!", e);
+            }
         }
 
         public async Task<AnswerResponse> SendAnswer(string dataSetId, DataSet dataSet)
         {
-            var request = new RestRequest($"/{dataSetId}/answer", Method.Post)
-                { RequestFormat = DataFormat.Json }
-                .AddJsonBody(dataSet);
+            try
+            {
+                var request = new RestRequest($"/{dataSetId}/answer", Method.Post)
+                    .AddJsonBody(dataSet);
 
-            var response = await _restClient.ExecuteAsync<AnswerResponse>(request);
+                _logger.LogInformation($"Sending {request.Method} request to {BaseUrl}{request.Resource}");
+                var response = await _restClient.ExecuteAsync<AnswerResponse>(request);
+                _logger.LogInformation($"Successfully got a response from {BaseUrl}{request.Resource}");
 
-            return response.Data;
+                return response.Data;
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Sending {nameof(SendAnswer)} request failed!");
+                throw new Exception("Call to external source failed!", e);
+            }
         }
     }
 }

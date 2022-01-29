@@ -6,6 +6,6 @@ namespace CoxAutomotiveCodingExercise.API.Services
     public interface IDataSetService
     {
         public AnswerResponse SendAnswer(Answer answer);
-        public Answer CreateAnswer();
+        public Task<Answer> CreateAnswer();
     }
 }

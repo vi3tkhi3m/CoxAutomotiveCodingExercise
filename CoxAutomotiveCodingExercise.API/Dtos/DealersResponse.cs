@@ -2,7 +2,7 @@
 {
     public class DealersResponse
     {
-        public int dealerId { get; set; }
-        public string name { get; set; }
+        public int DealerId { get; set; }
+        public string Name { get; set; }
     }
 }

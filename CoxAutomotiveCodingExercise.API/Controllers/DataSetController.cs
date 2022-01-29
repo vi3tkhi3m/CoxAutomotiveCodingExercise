@@ -7,10 +7,14 @@ namespace CoxAutomotiveCodingExercise.API.Controllers
     [Route("[controller]")]
     public class DataSetController : ControllerBase
     {
+        private readonly ILogger _logger;
         private readonly IDataSetService _dataSetService;
 
-        public DataSetController(IDataSetService dataSetService)
+        public DataSetController(
+            ILogger<DataSetController> logger,
+            IDataSetService dataSetService)
         {
+            _logger = logger;
             _dataSetService = dataSetService;
         }
 
@@ -19,16 +23,18 @@ namespace CoxAutomotiveCodingExercise.API.Controllers
         {
             try
             {
+                _logger.LogInformation("Creating an answer.");
                 var answer = _dataSetService.CreateAnswer();
 
-                var results = _dataSetService.SendAnswer(answer);
+                _logger.LogInformation("Sending the answer.");
+                var results = _dataSetService.SendAnswer(answer.Result);
 
                 return Ok(results);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                return BadRequest(e.Message);
+                _logger.LogWarning($"Something went wrong. Error message {e.Message}. Returning HTTP 400 - Bad Request");
+                return BadRequest();
             }
         }
     }

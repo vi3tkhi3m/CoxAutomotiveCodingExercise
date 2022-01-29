@@ -2,6 +2,6 @@
 {
     public class DataSetIdResponse
     {
-        public string datasetId { get; set; }
+        public string DatasetId { get; set; }
     }
 }
